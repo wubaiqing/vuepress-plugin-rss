@@ -11,7 +11,7 @@ const md = new MarkdownIt()
 
 module.exports = (pluginOptions, ctx) => {
   return {
-    name: 'vuepress-plugin-rss',
+    name: 'vuepress-plugin-rss-support',
 
     generated () {
       const { pages, sourceDir } = ctx
