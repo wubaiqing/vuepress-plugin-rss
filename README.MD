@@ -1,5 +1,9 @@
 # VuePress RSS 支持插件
 
+### 使用案例
+[https://github.com/wubaiqing/zaobao/blob/master/docs/.vuepress/config.js](https://github.com/wubaiqing/zaobao/blob/master/docs/.vuepress/config.js)
+
+
 ### 安装
 
 ```shell
