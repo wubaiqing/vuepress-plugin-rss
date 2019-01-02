@@ -1,6 +1,6 @@
 {
   "name": "vuepress-plugin-rss-support",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "main": "index.js",
   "author": "wubaiqing",
   "repository": "https://github.com/wubaiqing/vuepress-plugin-rss.git",
@@ -9,5 +9,8 @@
     "fs-extra": "^5.0.0",
     "markdown-it": "^8.4.2",
     "rss": "^1.2.2"
+  },
+  "devDependencies": {
+    "chalk": "^2.4.1"
   }
 }

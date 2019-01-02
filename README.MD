@@ -1,16 +1,16 @@
-# Vuepress Plugin RSS Support
+# VuePress Plugin RSS Support
 
-> RSS Support Plugin for Vuepress
+> VuePress RSS 支持插件
 
-## Install
+### 安装
 
+```shell
+$ yarn add vuepress-plugin-rss-support -D
 ```
-> yarn add vuepress-plugin-rss-support -D
-```
 
-## Config for your site
+### 配置
 
-- Update your `.vuepress/config.js`
+更新 `.vuepress/config.js` 文件
 
 ```js
 module.exports = {
@@ -19,15 +19,16 @@ module.exports = {
       [
         'vuepress-plugin-rss-support',
         {
+          // 网站地址
           site_url: 'https://wubaiqing.github.io/zaobao',
+          // 版权信息
           copyright: '2019 每日时报',
-          count: 60
+          // 目录过滤
+          filter: (page) => { return /^\/201.+/.test(page.path) },
+          // 显示条数
+          count: 60,
         }
       ]
     ]
 }
 ```
-
----
-
-License MIT
