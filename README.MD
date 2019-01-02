@@ -1,6 +1,4 @@
-# VuePress Plugin RSS Support
-
-> VuePress RSS 支持插件
+# VuePress RSS 支持插件
 
 ### 安装
 
