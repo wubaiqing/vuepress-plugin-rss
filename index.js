@@ -1,15 +1,21 @@
-const path = require('path')
+/**
+ * 新增 Markdown 转 HTML 依赖，基于 vuepree-plugin-rss 基础之上做了些改造
+ *
+ * @see https://github.com/youngtailors/vuepress-plugin-rss/blob/master/index.js
+ */
 const RSS = require('rss')
-const chalk = require('chalk')
+const path = require('path')
+const fs = require('fs-extra')
+const MarkdownIt = require('markdown-it')
+const md = new MarkdownIt()
 
 module.exports = (pluginOptions, ctx) => {
   return {
-    name: 'rss',
-    
+    name: 'vuepress-plugin-rss',
+
     generated () {
-      const fs = require('fs-extra')
       const { pages, sourceDir } = ctx
-      const { filter = () => true, count = 20 } = pluginOptions
+      const { count = 60 } = pluginOptions
       const siteData = require(path.resolve(sourceDir, '.vuepress/config.js'))
 
       const feed = new RSS({
@@ -17,18 +23,19 @@ module.exports = (pluginOptions, ctx) => {
         description: siteData.description,
         feed_url: `${pluginOptions.site_url}/rss.xml`,
         site_url: `${pluginOptions.site_url}`,
-        copyright: `${pluginOptions.copyright ? pluginOptions.copyright : 'Coralo 2018'}`,
-        language: 'en',
+        copyright: `${pluginOptions.copyright ? pluginOptions.copyright : ''}`,
+        language: 'zh-CN',
       })
 
       pages
-        .filter(page => String(page.frontmatter.type).toLowerCase() === 'post')
-        .filter(page => filter(page.frontmatter))
-        .map(page => ({...page, date: new Date(page.frontmatter.date || '')}))
+        .filter(page => {
+          return /^\/201.+/.test(page.path)
+        })
+        .map(page => ({...page, date: new Date(page.lastUpdated)}))
         .sort((a, b) => b.date - a.date)
         .map(page => ({
-          title: page.frontmatter.title,
-          description: page.excerpt,
+          title: page.title,
+          description: md.render(page._content),
           url: `${pluginOptions.site_url}${page.path}`,
           date: page.date,
         }))
@@ -39,7 +46,6 @@ module.exports = (pluginOptions, ctx) => {
         path.resolve(ctx.outDir, 'rss.xml'),
         feed.xml()
       );
-      console.log(chalk.green.bold('RSS has been generated!'))
     }
   }
 }
